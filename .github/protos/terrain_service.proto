@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package terrain_service;
+
+service TerrainService {
+  rpc GetHeightByLatLng(LatLng) returns (TerrainHeight) {}
+}
+
+message LatLng {
+  float lat = 1;
+  float lng = 2;
+}
+
+message TerrainHeight {
+  float height = 1;
+}
