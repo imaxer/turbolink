@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package sitl_service;
+
+service SitlService {
+  rpc SetTerrainHeight(SetTerrainHeightRequest) returns (SetTerrainHeightResponse) {}
+
+  rpc SetAileronsFailure(SetAileronsFailureRequest) returns (SetAileronsFailureResponse) {}
+
+  rpc SetElevonsFailure(SetElevonsFailureRequest) returns (SetElevonsFailureResponse) {}
+
+  rpc SetGpsFailure(SetGpsFailureRequest) returns (SetGpsFailureResponse) {}
+
+  rpc GetZoomStream(GetZoomStreamRequest) returns (stream GetZoomStreamResponse) {}
+}
+
+message SetTerrainHeightRequest {
+  float height = 1;
+}
+
+message SetTerrainHeightResponse {}
+
+message SetAileronsFailureRequest {
+  bool failed = 1;
+}
+
+message SetAileronsFailureResponse {}
+
+message SetElevonsFailureRequest {
+  bool failed = 1;
+}
+
+message SetElevonsFailureResponse {}
+
+message SetGpsFailureRequest {
+  bool failed = 1;
+}
+
+message SetGpsFailureResponse {}
+
+message GetZoomStreamRequest {}
+
+message GetZoomStreamResponse {
+  float zoom = 1;
+}
+
