@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
-import "types/lat_lng.proto";
+import ".github/protos/types/lat_lng.proto";
 
 package sitl_service;
 
