@@ -1,5 +1,8 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+import "types/lat_lng.proto";
+
 package sitl_service;
 
 service SitlService {
@@ -12,6 +15,14 @@ service SitlService {
   rpc SetGpsFailure(SetGpsFailureRequest) returns (SetGpsFailureResponse) {}
 
   rpc GetZoomStream(GetZoomStreamRequest) returns (stream GetZoomStreamResponse) {}
+
+  rpc SetParachute(SetParachuteRequest) returns (SetParachuteResponse) {}
+
+  rpc SetFreeze(SetFreezeRequest) returns (SetFreezeResponse) {}
+
+  rpc ChangeUavState(ChangeUavStateRequest) returns (ChangeUavStateResponse) {}
+
+  rpc UpdateFlightDynamicModel(stream UpdateFlightDynamicModelRequest) returns (UpdateFlightDynamicModelResponse) {}
 }
 
 message SetTerrainHeightRequest {
@@ -19,6 +30,18 @@ message SetTerrainHeightRequest {
 }
 
 message SetTerrainHeightResponse {}
+
+message SetParachuteRequest {
+  int32 parachute = 1;
+}
+
+message SetParachuteResponse {}
+
+message SetFreezeRequest {
+  int32 freeze = 1;
+}
+
+message SetFreezeResponse {}
 
 message SetAileronsFailureRequest {
   bool failed = 1;
@@ -44,3 +67,48 @@ message GetZoomStreamResponse {
   float zoom = 1;
 }
 
+enum UavState {
+  UAV_IDLE = 0;
+  UAV_TAKE_OFF = 1;
+  UAV_IN_FLIGHT = 2;
+  UAV_LANDING = 3;
+  UAV_CRASHED = 4;
+}
+
+message UavStateRequest {
+  UavState state = 1;
+}
+
+message ChangeUavStateRequest {
+  google.protobuf.Timestamp ts = 1;
+  UavStateRequest state = 2;
+}
+
+message ChangeUavStateResponse {
+  bool result = 1;
+}
+
+message UpdateFlightDynamicModelRequest {
+  google.protobuf.Timestamp ts = 1;
+  google.type.LatLng position = 2;
+  float agl = 3;
+  float vcas = 4;
+  float A_X_pilot = 5;
+  float A_Y_pilot = 6;
+  float A_Z_pilot = 7;
+  float phi = 8;
+  float theta = 9;
+  float psi = 10;
+  float phidot = 11;
+  float thetadpt = 12;
+  float psidot = 13;
+  float v_north = 14;
+  float v_east = 15;
+  float v_down = 16;
+  float rpm_1 = 17;
+  float rpm_2 = 18;
+}
+
+message UpdateFlightDynamicModelResponse {
+  bool result = 1;
+}
