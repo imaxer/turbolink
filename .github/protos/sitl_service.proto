@@ -23,6 +23,8 @@ service SitlService {
   rpc ChangeUavState(ChangeUavStateRequest) returns (ChangeUavStateResponse) {}
 
   rpc UpdateFlightDynamicModel(stream UpdateFlightDynamicModelRequest) returns (UpdateFlightDynamicModelResponse) {}
+
+  rpc GetFocalLengthStream(GetFocalLengthStreamRequest) returns (stream GetFocalLengthStreamResponse) {}
 }
 
 message SetTerrainHeightRequest {
@@ -111,4 +113,11 @@ message UpdateFlightDynamicModelRequest {
 
 message UpdateFlightDynamicModelResponse {
   bool result = 1;
+}
+
+message GetFocalLengthStreamRequest {}
+
+message GetFocalLengthStreamResponse {
+  google.protobuf.Timestamp ts = 1;
+  uint32 focal_length = 2;
 }
