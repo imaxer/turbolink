@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package sitl_service_rec;
+
+service SitlService {
+  rpc GetFocalLengthStream(GetFocalLengthStreamRequest) returns (stream GetFocalLengthStreamResponse) {}
+
+  rpc GetGimbalCmdParamsStream(GetGimbalCmdParamsStreamRequest) returns (stream GetGimbalCmdParamsStreamResponse) {}
+}
+
+
+message GetFocalLengthStreamRequest {}
+
+message GetFocalLengthStreamResponse {
+  google.protobuf.Timestamp ts = 1;
+  uint32 focal_length = 2;
+}
+
+message GetGimbalCmdParamsStreamRequest {
+  google.protobuf.Timestamp ts = 1;
+}
+
+message GetGimbalCmdParamsStreamResponse {
+  google.protobuf.Timestamp ts = 1;
+  float pitch = 2;
+  float roll = 3;
+  float yaw = 4;
+}
