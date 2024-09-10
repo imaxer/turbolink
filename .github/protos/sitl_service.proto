@@ -16,7 +16,7 @@ service SitlService {
 
   rpc GetZoomStream(GetZoomStreamRequest) returns (stream GetZoomStreamResponse) {}
 
-  rpc SetParachute(SetParachuteRequest) returns (SetParachuteResponse) {}
+  rpc GetParachuteStream(GetParachuteStreamRequest) returns (stream GetParachuteStreamResponse) {}
 
   rpc SetFreeze(SetFreezeRequest) returns (SetFreezeResponse) {}
 
@@ -25,10 +25,6 @@ service SitlService {
   rpc UpdateFlightDynamicModel(stream UpdateFlightDynamicModelRequest) returns (UpdateFlightDynamicModelResponse) {}
 
   rpc GetFocalLengthStream(GetFocalLengthStreamRequest) returns (stream GetFocalLengthStreamResponse) {}
-
-  rpc GetGimbalCmdParamsStream(GetGimbalCmdParamsStreamRequest) returns (stream GetGimbalCmdParamsStreamResponse) {}
-
-  rpc UpdateGimbalAttitude(stream UpdateGimbalAttitudeRequest) returns(UpdateGimbalAttitudeResponse) {}
 }
 
 message SetTerrainHeightRequest {
@@ -37,11 +33,12 @@ message SetTerrainHeightRequest {
 
 message SetTerrainHeightResponse {}
 
-message SetParachuteRequest {
-  int32 parachute = 1;
-}
+message GetParachuteStreamRequest {}
 
-message SetParachuteResponse {}
+message GetParachuteStreamResponse {
+  google.protobuf.Timestamp ts = 1;
+  int32 parachute = 2;
+}
 
 message SetFreezeRequest {
   int32 freeze = 1;
@@ -125,23 +122,3 @@ message GetFocalLengthStreamResponse {
   google.protobuf.Timestamp ts = 1;
   uint32 focal_length = 2;
 }
-
-message GetGimbalCmdParamsStreamRequest {
-  google.protobuf.Timestamp ts = 1;
-}
-
-message GetGimbalCmdParamsStreamResponse {
-  google.protobuf.Timestamp ts = 1;
-  float pitch = 2;
-  float roll = 3;
-  float yaw = 4;
-}
-
-message UpdateGimbalAttitudeRequest {
-  google.protobuf.Timestamp ts = 1;
-  float pitch = 2;
-  float roll = 3;
-  float yaw = 4;
-}
-
-message UpdateGimbalAttitudeResponse {}

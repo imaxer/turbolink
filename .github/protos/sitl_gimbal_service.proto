@@ -2,20 +2,12 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-package sitl_service_rec;
+package sitl_gimabl_service;
 
-service SitlService {
-  rpc GetFocalLengthStream(GetFocalLengthStreamRequest) returns (stream GetFocalLengthStreamResponse) {}
-
+service SitlGimbalService {
   rpc GetGimbalCmdParamsStream(GetGimbalCmdParamsStreamRequest) returns (stream GetGimbalCmdParamsStreamResponse) {}
-}
 
-
-message GetFocalLengthStreamRequest {}
-
-message GetFocalLengthStreamResponse {
-  google.protobuf.Timestamp ts = 1;
-  uint32 focal_length = 2;
+  rpc UpdateGimbalAttitude(UpdateGimbalAttitudeRequest) returns(UpdateGimbalAttitudeResponse) {}
 }
 
 message GetGimbalCmdParamsStreamRequest {
@@ -28,3 +20,12 @@ message GetGimbalCmdParamsStreamResponse {
   float roll = 3;
   float yaw = 4;
 }
+
+message UpdateGimbalAttitudeRequest {
+  google.protobuf.Timestamp ts = 1;
+  float pitch = 2;
+  float roll = 3;
+  float yaw = 4;
+}
+
+message UpdateGimbalAttitudeResponse {}
