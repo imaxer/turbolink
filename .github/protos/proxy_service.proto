@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "lat_lng.proto";
+
+package proxy_service;
+
+service ProxyService {
+  rpc BroadcastUavStates(BroadcastUavStatesRequest) returns (BroadcastUavStatesResponse);
+
+  rpc SubscribeUavStates(SubscribeUavStatesRequest) returns (stream SubscribeUavStatesResponse);
+}
+
+message UavState {
+  string tag = 1;
+  google.type.LatLng position = 2;
+  float altitude = 3;
+  float azimuth = 4;
+}
+
+message BroadcastUavStatesRequest {
+  google.protobuf.Timestamp ts = 1;
+  repeated UavState states = 2;
+}
+
+message BroadcastUavStatesResponse {
+  google.protobuf.Timestamp ts = 1;
+}
+
+message SubscribeUavStatesRequest {}
+
+message SubscribeUavStatesResponse {
+  google.protobuf.Timestamp ts = 1;
+  repeated UavState states = 2;
+}
