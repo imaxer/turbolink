@@ -8,9 +8,11 @@ package sitl_service;
 service SitlService {
   rpc SetTerrainHeight(SetTerrainHeightRequest) returns (SetTerrainHeightResponse) {}
 
-  rpc SetAileronsFailure(SetAileronsFailureRequest) returns (SetAileronsFailureResponse) {}
+  rpc SetElevoneRightFailure(SetElevoneRightFailureRequest) returns (SetElevoneRightFailureResponse) {}
 
-  rpc SetElevonsFailure(SetElevonsFailureRequest) returns (SetElevonsFailureResponse) {}
+  rpc SetElevoneLeftFailure(SetElevoneLeftFailureRequest) returns (SetElevoneLeftFailureResponse) {}
+
+  rpc SetParachuteFailure(SetParachuteFailureRequest) returns (SetParachuteFailureResponse) {}
 
   rpc SetGpsFailure(SetGpsFailureRequest) returns (SetGpsFailureResponse) {}
 
@@ -24,7 +26,13 @@ service SitlService {
 
   rpc UpdateFlightDynamicModel(stream UpdateFlightDynamicModelRequest) returns (UpdateFlightDynamicModelResponse) {}
 
-  rpc GetFocalLengthStream(GetFocalLengthStreamRequest) returns (stream GetFocalLengthStreamResponse) {}
+  rpc GetFocalLengthStream(GetFocalLengthStreamRequest) returns (stream GetFocalLengthStreamResponse) {
+    option deprecated = true;
+  }
+
+  rpc GetCameraZoomStateStream(GetCameraZoomStateStreamRequest) returns (stream GetCameraZoomStateStreamResponse) {}
+
+  rpc UpdateFocalLength(UpdateFocalLengthRequest) returns (UpdateFocalLengthResponse) {}
 }
 
 message SetTerrainHeightRequest {
@@ -46,17 +54,23 @@ message SetFreezeRequest {
 
 message SetFreezeResponse {}
 
-message SetAileronsFailureRequest {
+message SetElevoneLeftFailureRequest {
+  bool failed = 1;
+}
+message SetElevoneRightFailureRequest {
   bool failed = 1;
 }
 
-message SetAileronsFailureResponse {}
-
-message SetElevonsFailureRequest {
+message SetParachuteFailureRequest {
   bool failed = 1;
 }
 
-message SetElevonsFailureResponse {}
+message SetParachuteFailureResponse {}
+
+message SetElevoneLeftFailureResponse {}
+
+message SetElevoneRightFailureResponse {}
+
 
 message SetGpsFailureRequest {
   bool failed = 1;
@@ -121,4 +135,28 @@ message GetFocalLengthStreamRequest {}
 message GetFocalLengthStreamResponse {
   google.protobuf.Timestamp ts = 1;
   uint32 focal_length = 2;
+}
+
+message GetCameraZoomStateStreamRequest {
+  google.protobuf.Timestamp ts = 1;
+}
+
+message GetCameraZoomStateStreamResponse {
+  enum ZoomState {
+    IDLE = 0;
+    ZOOM_IN = 1;
+    ZOOM_OUT = 2;
+  }
+
+  google.protobuf.Timestamp ts = 1;
+  ZoomState state = 2;
+}
+
+message UpdateFocalLengthRequest {
+  google.protobuf.Timestamp ts = 1;
+  uint32 focal_length = 2;
+}
+
+message UpdateFocalLengthResponse {
+  google.protobuf.Timestamp ts = 1;
 }
