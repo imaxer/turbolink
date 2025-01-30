@@ -150,6 +150,7 @@ message GetCameraZoomStateStreamResponse {
 
   google.protobuf.Timestamp ts = 1;
   ZoomState state = 2;
+  float rc_input = 3;
 }
 
 message UpdateFocalLengthRequest {
